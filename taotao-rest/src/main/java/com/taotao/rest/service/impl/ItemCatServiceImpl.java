@@ -1,4 +1,4 @@
-package com.taotao.rest.service;
+package com.taotao.rest.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,7 @@ import com.taotao.pojo.TbItemCatExample;
 import com.taotao.pojo.TbItemCatExample.Criteria;
 import com.taotao.rest.pojo.CatNode;
 import com.taotao.rest.pojo.CatResult;
+import com.taotao.rest.service.ItemCatService;
 
 /**
  * 商品分类服务
