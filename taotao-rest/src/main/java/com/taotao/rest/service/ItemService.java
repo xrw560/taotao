@@ -6,4 +6,8 @@ public interface ItemService {
 
 	
 	TaotaoResult getItemBaseInf(long itemId);
+	
+	TaotaoResult getItemDesc(long itemId);
+	
+	TaotaoResult getItemParam(long itemId);
 }
