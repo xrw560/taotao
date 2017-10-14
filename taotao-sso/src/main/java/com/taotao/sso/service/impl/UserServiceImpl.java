@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.sound.sampled.LineListener;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -104,6 +105,20 @@ public class UserServiceImpl implements UserService {
 		jedisClient.expire(REDIS_USER_SESSION_KEY + ":" + token, SSO_SESSION_EXPIRE);
 		// 返回token
 		return TaotaoResult.ok(token);
+	}
+
+	@Override
+	public TaotaoResult getUserByToken(String token) {
+		
+		//根据token从redis中查询用户信息
+		String json = jedisClient.get(REDIS_USER_SESSION_KEY + ":" + token);
+		if(StringUtils.isBlank(json)) {
+			return TaotaoResult.build(400, "此session已经过期，请重新登录");
+		}
+		//更新过期时间
+		jedisClient.expire(REDIS_USER_SESSION_KEY + ":" + token, SSO_SESSION_EXPIRE);
+		//返回用户信息
+		return TaotaoResult.ok(JsonUtils.jsonToPojo(json, TbUser.class));
 	}
 
 }
