@@ -13,5 +13,11 @@
 	<bean id="httpSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
 		<constructor-arg name="baseURL" value="${SOLR.SERVER.URL}"></constructor-arg>
 	</bean>
+	<!-- 集群版 -->
+<!-- 	<bean id="cloudSolrServer" class="org.apache.solr.client.solrj.impl.CloudSolrServer">
+		<constructor-arg name="zkHost"
+			value="192.168.25.154:2181,192.168.25.154:2182,192.168.25.154:2183"></constructor-arg>
+		<constructor-arg name="defaultCollection" value="collection2"></constructor-arg>
+	</bean> -->
 
 </beans>

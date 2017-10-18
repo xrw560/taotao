@@ -12,6 +12,12 @@ import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 import org.junit.Test;
 
+/**
+ * 单机版solr测试
+ * 
+ * @author Administrator
+ *
+ */
 public class SolrJTest {
 
 	@Test
@@ -33,25 +39,25 @@ public class SolrJTest {
 	public void deleteDocument() throws Exception {
 		// 创建一连接
 		SolrServer solrServer = new HttpSolrServer("http://192.168.138.130:8080/solr");
-//		solrServer.deleteById("test001");
+		// solrServer.deleteById("test001");
 		solrServer.deleteByQuery("*:*");
 		solrServer.commit();
 	}
-	
+
 	@Test
-	public void queryDocument() throws Exception{
+	public void queryDocument() throws Exception {
 		SolrServer solrServer = new HttpSolrServer("http://192.168.138.130:8080/solr");
-		//创建一个查询对象
+		// 创建一个查询对象
 		SolrQuery query = new SolrQuery();
-		//设置查询条件
+		// 设置查询条件
 		query.setQuery("*:*");
 		query.setStart(20);
 		query.setRows(50);
-		//执行查询
+		// 执行查询
 		QueryResponse response = solrServer.query(query);
-		//取查询结果
+		// 取查询结果
 		SolrDocumentList solrDocumentLists = response.getResults();
-		System.out.println("共查询到记录："+solrDocumentLists.getNumFound());
+		System.out.println("共查询到记录：" + solrDocumentLists.getNumFound());
 		for (SolrDocument solrDocument : solrDocumentLists) {
 			System.out.println(solrDocument.get("id"));
 			System.out.println(solrDocument.get("item_title"));
@@ -59,5 +65,5 @@ public class SolrJTest {
 			System.out.println(solrDocument.get("item_image"));
 		}
 	}
-	
+
 }
