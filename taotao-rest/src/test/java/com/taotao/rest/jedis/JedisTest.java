@@ -3,6 +3,8 @@ package com.taotao.rest.jedis;
 import java.util.HashSet;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -12,6 +14,7 @@ import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPool;
 
 public class JedisTest {
+	private static final Logger LOGGER = LoggerFactory.getLogger(JedisTest.class);
 
 	@Test
 	public void testJedisSingle() {
@@ -46,6 +49,7 @@ public class JedisTest {
 	 */
 	@Test
 	public void testJedisCluster() {
+		LOGGER.debug("调用redisCluster开始");
 		HashSet<HostAndPort> nodes = new HashSet<>();
 		nodes.add(new HostAndPort("192.168.138.130", 7001));
 		nodes.add(new HostAndPort("192.168.138.130", 7002));
@@ -54,11 +58,16 @@ public class JedisTest {
 		nodes.add(new HostAndPort("192.168.138.130", 7005));
 		nodes.add(new HostAndPort("192.168.138.130", 7006));
 
+		LOGGER.info("创建一个JedisCluster对象");
+
 		JedisCluster cluster = new JedisCluster(nodes);
+		LOGGER.debug("设置key1的值为1000");
 		cluster.set("key1", "1000");
+		LOGGER.debug("从Redis中取key1的值");
 		String string = cluster.get("key1");
 		System.out.println(string);
 		cluster.close();
+		LOGGER.error("关闭连接失败");
 	}
 
 	/**
